@@ -1,8 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
+import Navbar from "@/components/Navbar";
 
 export default function TechStack() {
+    // 1. เพิ่ม State สำหรับควบคุม Sidebar
+    const [isCollapsed, setIsCollapsed] = useState(false);
+
     const techGroups = [
         {
             title: "Frontend Development",
@@ -37,54 +42,71 @@ export default function TechStack() {
     ];
 
     return (
-        <div className="flex min-h-screen bg-zinc-50 dark:bg-[#09090b] font-sans transition-colors duration-300">
-            <Sidebar />
+        <div className="flex min-h-screen bg-zinc-50 dark:bg-[#09090b] font-sans transition-colors duration-300 overflow-x-hidden">
 
-            <main className="flex-1 sm:ml-64 p-6 md:p-12 max-w-6xl text-zinc-900 dark:text-zinc-100">
-                <header className="mb-16">
-                    <h1 className="text-4xl font-black tracking-tight mb-4 italic uppercase">
-                        TECHNICAL <span className="text-blue-600">SKILLS</span>
-                    </h1>
-                    <p className="text-zinc-500 dark:text-zinc-400 text-lg max-w-2xl font-medium">
-                        รวบรวมทักษะทางเทคนิคที่ใช้งานจริงในการพัฒนาซอฟต์แวร์ ทั้งฝั่ง Frontend และ Backend
-                    </p>
-                </header>
+            {/* 2. ส่ง Props ให้ Sidebar */}
+            <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
 
-                <div className="space-y-20">
-                    {techGroups.map((group) => (
-                        <section key={group.title}>
-                            <div className="mb-8 border-l-4 border-blue-600 pl-4">
-                                <h2 className="text-2xl font-black uppercase tracking-tight italic dark:text-white">
-                                    {group.title}
-                                </h2>
-                                <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-1 font-bold uppercase tracking-widest">
-                                    {group.description}
-                                </p>
-                            </div>
+            {/* 3. ปรับ Margin ตามสถานะ Sidebar */}
+            <div className={`flex-1 flex flex-col transition-all duration-300 ${isCollapsed ? "sm:ml-20" : "sm:ml-64"}`}>
 
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
-                                {group.skills.map((skill) => (
-                                    <div key={skill.name} className="group p-4 md:p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl md:rounded-3xl transition-all flex flex-col items-center gap-3 md:gap-4">
-                                        <div className="w-10 h-10 md:w-14 md:h-14 flex items-center justify-center bg-zinc-50 dark:bg-zinc-800/50 rounded-xl md:rounded-2xl">
-                                            <img src={`https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/${skill.icon}.svg`} className={`w-8 h-8 md:w-10 md:h-10 ${skill.icon === 'nextdotjs' ? 'dark:invert' : ''}`} />
+                {/* 4. เพิ่ม Navbar เพื่อความต่อเนื่อง */}
+                <Navbar isCollapsed={isCollapsed} />
+
+                {/* 5. Main Content ปรับความกว้างให้เต็มจอ */}
+                <main className="flex-1 p-6 md:p-12 pt-28 md:pt-32 w-full max-w-[1600px] mx-auto text-zinc-900 dark:text-zinc-100 transition-all">
+                    <header className="mb-16 border-b border-zinc-900/10 dark:border-zinc-800 pb-10">
+                        <h1 className="text-4xl md:text-6xl font-black tracking-tighter mb-4 italic uppercase leading-none">
+                            TECHNICAL <span className="text-blue-600">SKILLS</span>
+                        </h1>
+                        <p className="text-zinc-500 dark:text-zinc-400 text-lg md:text-xl font-medium max-w-3xl leading-relaxed italic">
+                            รวบรวมทักษะทางเทคนิคที่ใช้งานจริงในการพัฒนาซอฟต์แวร์ ทั้งฝั่ง Frontend และ Backend
+                        </p>
+                    </header>
+
+                    <div className="space-y-24">
+                        {techGroups.map((group) => (
+                            <section key={group.title}>
+                                <div className="mb-10 border-l-8 border-blue-600 pl-6">
+                                    <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tighter italic dark:text-white leading-none">
+                                        {group.title}
+                                    </h2>
+                                    <p className="text-zinc-500 dark:text-zinc-400 text-sm md:text-base mt-2 font-black uppercase tracking-widest opacity-70">
+                                        {group.description}
+                                    </p>
+                                </div>
+
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
+                                    {group.skills.map((skill) => (
+                                        <div
+                                            key={skill.name}
+                                            className="group p-6 md:p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl transition-all duration-500 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/5 flex flex-col items-center gap-4 md:gap-6"
+                                        >
+                                            <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center bg-zinc-50 dark:bg-zinc-800/50 rounded-xl transition-transform group-hover:scale-110">
+                                                <img
+                                                    src={`https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/${skill.icon}.svg`}
+                                                    className={`w-10 h-10 md:w-12 md:h-12 ${skill.icon === 'nextdotjs' ? 'dark:invert' : ''}`}
+                                                    alt={skill.name}
+                                                />
+                                            </div>
+                                            <span className="text-[10px] md:text-[12px] font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-[0.2em] text-center group-hover:text-blue-600 transition-colors">
+                                                {skill.name}
+                                            </span>
                                         </div>
-                                        <span className="text-[9px] md:text-[10px] font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-widest text-center">
-                                            {skill.name}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
-                    ))}
-                </div>
+                                    ))}
+                                </div>
+                            </section>
+                        ))}
+                    </div>
 
-                {/* --- Footer Decoration --- */}
-                <div className="mt-24 pt-12 border-t border-zinc-200 dark:border-zinc-800 text-center">
-                    <p className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.5em] italic">
-                        Continuously Learning & Improving
-                    </p>
-                </div>
-            </main>
+                    {/* --- Footer Decoration --- */}
+                    <div className="mt-24 pt-12 border-t border-zinc-200 dark:border-zinc-800 text-center">
+                        <p className="text-[10px] md:text-[12px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.5em] italic">
+                            Continuously Learning & Improving
+                        </p>
+                    </div>
+                </main>
+            </div>
         </div>
     );
 }

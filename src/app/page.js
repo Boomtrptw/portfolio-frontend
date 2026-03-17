@@ -1,122 +1,121 @@
+"use client";
+import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
-import ProjectCard from "@/components/ProjectCard";
-import { Briefcase, GraduationCap, Code2, Wrench, Terminal } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import { Briefcase, GraduationCap, Wrench, Terminal } from "lucide-react";
 
 export default function Dashboard() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   return (
-    <div className="flex min-h-screen bg-zinc-50 dark:bg-[#09090b] font-sans text-zinc-900 dark:text-zinc-100">
-      <Sidebar />
+    <div className="flex min-h-screen bg-zinc-50 dark:bg-[#09090b] font-sans text-zinc-900 dark:text-zinc-100 transition-all duration-300">
+      <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
 
-      <main className="flex-1 sm:ml-64 p-6 md:p-12">
-        {/* --- Header Section --- */}
-        <header className="mb-12">
-          <h1 className="text-4xl font-black tracking-tight mb-2">
-            Theerapong <span className="text-blue-600">(Boom)</span>
-          </h1>
-          <p className="text-zinc-500 dark:text-zinc-400 text-lg">
-            Full Stack Developer | Specialist in Industrial & Backend Solutions
-          </p>
-        </header>
+      <div className={`flex-1 flex flex-col transition-all duration-300 ${isCollapsed ? "sm:ml-20" : "sm:ml-64"}`}>
+        <Navbar isCollapsed={isCollapsed} />
 
-        {/* --- Stats Grid --- */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <StatCard label="Experience" value="2+ Years" detail="Full-time & Internship" />
-          <StatCard label="Core Tech" value="JS / TS" detail="Modern Web Development" />
-          <StatCard label="Education" value="B.Eng" detail="Computer Engineering" />
-        </div>
+        <main className="flex-1 p-6 md:p-12 pt-24 md:pt-28 w-full transition-all duration-300">
+          {/* Header Section - ปรับขนาดให้พอดี ไม่ใหญ่เกินไป */}
+          <header className="mb-12">
+            <h1 className="text-3xl md:text-5xl font-black tracking-tighter mb-3 uppercase italic">
+              Theerapong <span className="text-blue-600">(Boom)</span>
+            </h1>
+            <p className="text-zinc-500 dark:text-zinc-400 text-base md:text-lg font-medium max-w-2xl leading-relaxed">
+              Full Stack Developer | Specialist in Industrial & Backend Solutions
+            </p>
+          </header>
 
-        {/* --- Experience Section --- */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-16">
-          <div className="lg:col-span-7">
-            <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
-              <Briefcase className="text-blue-500" /> Work & Internship
-            </h2>
-            <div className="space-y-10 border-l-2 border-zinc-200 dark:border-zinc-800 ml-3 pl-8">
-              <ExperienceItem
-                title="Full Stack Developer"
-                company="A&P Maintenance Services Thailand"
-                date="Aug 2025 - Present (8 months)"
-                desc="Building field survey systems and automated reporting tools to optimize maintenance workflows."
-              />
-              <ExperienceItem
-                title="Software Developer"
-                company="VR Intelligence"
-                date="Mar 2024 - Jul 2025 (1 year 5 months)"
-                desc="Developed Production Control Board (PCB) systems for real-time manufacturing data visualization."
-              />
-              <ExperienceItem
-                title="Backend Developer (Internship)"
-                company="Going Jess"
-                date="Apr 2022 - Jun 2022 (3 months)"
-                desc="Focused on server-side logic and database management using FastAPI and optimized SQL queries."
-                isIntern
-              />
-            </div>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <StatCard label="Experience" value="2+ Years" detail="Full-time & Internship" />
+            <StatCard label="Core Tech" value="JS / TS" detail="Modern Web Development" />
+            <StatCard label="Education" value="B.Eng" detail="Computer Engineering" />
           </div>
 
-          {/* --- Education & Skills --- */}
-          <div className="lg:col-span-5 space-y-12">
-            <div>
-              <h2 className="text-2xl font-bold mb-8 flex items-center gap-3">
-                <GraduationCap className="text-blue-500" /> Education
+          {/* Main Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 mb-16">
+            <div className="lg:col-span-7">
+              <h2 className="text-2xl font-black mb-10 flex items-center gap-3 italic uppercase tracking-tight">
+                <Briefcase className="text-blue-600" size={24} /> Work & Internship
               </h2>
-              <div className="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
-                <h4 className="font-bold text-lg text-blue-600 dark:text-blue-400 text-[16px]">Rattanabundit University (RBAC)</h4>
-                <p className="font-medium mt-1 text-sm italic">B.Eng. Computer and Information Engineering</p>
-                <p className="text-xs text-zinc-500 mt-1">Class of 2020 - 2023</p>
+              <div className="space-y-12 border-l-2 border-zinc-200 dark:border-zinc-800 ml-3 pl-8">
+                <ExperienceItem
+                  title="Full Stack Developer"
+                  company="A&P Maintenance Services Thailand"
+                  date="Aug 2025 - Present (8 months)"
+                  desc="Building field survey systems and automated reporting tools to optimize maintenance workflows."
+                />
+                <ExperienceItem
+                  title="Software Developer"
+                  company="VR Intelligence"
+                  date="Mar 2024 - Jul 2025 (1 year 5 months)"
+                  desc="Developed Production Control Board (PCB) systems for real-time manufacturing data visualization."
+                />
+                <ExperienceItem
+                  title="Backend Developer (Internship)"
+                  company="Going Jess"
+                  date="Apr 2022 - Jun 2022 (3 months)"
+                  desc="Focused on server-side logic and database management using FastAPI and optimized SQL queries."
+                  isIntern
+                />
               </div>
             </div>
 
-            <div>
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                <Wrench className="text-blue-500" /> Technical Skills
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "NextJS", "ReactJS", "NodeJS", "FastAPI", "C#.NET (MVC)",
-                  "SQL Server", "MySQL", "MongoDB", "Git", "Postman"
-                ].map((s) => (
-                  <span key={s} className="px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 rounded-lg text-xs font-bold border border-blue-100 dark:border-blue-900/30">
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
+            <div className="lg:col-span-5 space-y-12">
+              <section>
+                <h2 className="text-2xl font-black mb-8 flex items-center gap-3 italic uppercase tracking-tight">
+                  <GraduationCap className="text-blue-600" size={24} /> Education
+                </h2>
+                <div className="p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm border-b-4 border-b-blue-600 transition-all hover:scale-[1.02]">
+                  <h4 className="font-black text-lg text-zinc-900 dark:text-white uppercase italic leading-tight">Rattanabundit University (RBAC)</h4>
+                  <p className="font-black mt-2 text-sm text-blue-600 italic tracking-widest uppercase">B.Eng. Computer Engineering</p>
+                  <p className="text-[10px] font-black text-zinc-400 mt-2 uppercase tracking-widest">Class of 2020 - 2023</p>
+                </div>
+              </section>
 
-            <div>
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                <Terminal className="text-blue-500" /> Soft Skills
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {["Teamwork", "Agile", "Communication"].map((s) => (
-                  <span key={s} className="px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-lg text-xs font-bold">
-                    {s}
-                  </span>
-                ))}
-              </div>
+              <section>
+                <h2 className="text-2xl font-black mb-6 flex items-center gap-3 italic uppercase tracking-tight">
+                  <Wrench className="text-blue-600" size={24} /> Technical Skills
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {["NextJS", "ReactJS", "NodeJS", "FastAPI", "C#.NET (MVC)", "SQL Server", "MySQL", "MongoDB", "Git", "Postman"].map((s) => (
+                    <span key={s} className="px-3 py-1.5 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 rounded-lg text-[10px] font-black uppercase tracking-tight border border-zinc-200 dark:border-zinc-800 hover:border-blue-500 transition-colors">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </section>
+
+              {/* คืนค่า Soft Skills ที่หายไปกลับมาตรงนี้ครับ */}
+              <section>
+                <h2 className="text-2xl font-black mb-6 flex items-center gap-3 italic uppercase tracking-tight">
+                  <Terminal className="text-blue-600" size={24} /> Soft Skills
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {["Teamwork", "Agile", "Communication"].map((s) => (
+                    <span key={s} className="px-3 py-1.5 bg-zinc-900 dark:bg-blue-600 text-white rounded-lg text-[10px] font-black uppercase tracking-widest italic">
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </section>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }
 
-// --- Sub-components ---
 function StatCard({ label, value, detail }) {
   return (
-    // 1. ปรับ rounded จาก [2rem] เป็น xl เพื่อให้ดูเหลี่ยมคมขึ้น
-    <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-sm transition-all hover:border-blue-500/50">
-      <p className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] mb-3">
+    <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-sm transition-all hover:border-blue-500/50 group">
+      <p className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] mb-3 group-hover:text-blue-600 transition-colors">
         {label}
       </p>
-
-      {/* 2. ปรับขนาดฟอนต์จาก text-3xl เป็น text-xl หรือ 2xl เพื่อไม่ให้คำขาด 
-          และใช้ break-words ป้องกันกรณีชื่อเทคโนโลยียาวมากๆ */}
-      <h3 className="text-xl md:text-2xl font-black tracking-tight dark:text-zinc-100 break-words leading-tight">
+      <h3 className="text-xl md:text-2xl font-black tracking-tight dark:text-white break-words leading-tight italic uppercase">
         {value}
       </h3>
-
       <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 font-medium">
         {detail}
       </p>
@@ -127,11 +126,14 @@ function StatCard({ label, value, detail }) {
 function ExperienceItem({ title, company, date, desc, isIntern }) {
   return (
     <div className="relative group">
-      <div className={`absolute -left-[41px] top-1.5 w-4 h-4 rounded-full border-4 border-zinc-50 dark:border-black transition-transform ${isIntern ? 'bg-zinc-400' : 'bg-blue-600 group-hover:scale-125'}`} />
-      <h4 className="text-xl font-bold">{title}</h4>
-      <p className="text-blue-600 dark:text-blue-400 font-bold text-sm uppercase tracking-tight">{company}</p>
-      <p className="text-[10px] text-zinc-400 mt-1 font-mono uppercase">{date}</p>
-      <p className="text-zinc-500 dark:text-zinc-400 mt-3 leading-relaxed text-sm">{desc}</p>
+      <div className={`absolute -left-[41px] top-1.5 w-4 h-4 rounded-full border-4 border-zinc-50 dark:border-[#09090b] transition-all duration-300 ${isIntern
+        ? 'bg-zinc-300 dark:bg-zinc-700'
+        : 'bg-blue-600 group-hover:scale-125 group-hover:shadow-[0_0_15px_rgba(37,99,235,0.5)]'
+        }`} />
+      <h4 className="text-xl font-black uppercase italic tracking-tight dark:text-white">{title}</h4>
+      <p className="text-blue-600 dark:text-blue-400 font-black text-xs uppercase tracking-widest mt-1">{company}</p>
+      <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-2 font-black uppercase tracking-widest">{date}</p>
+      <p className="text-zinc-500 dark:text-zinc-400 mt-4 leading-relaxed text-sm font-medium">{desc}</p>
     </div>
   );
 }
