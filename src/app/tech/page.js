@@ -1,3 +1,5 @@
+"use client";
+
 import Sidebar from "@/components/Sidebar";
 
 export default function TechStack() {
@@ -35,41 +37,38 @@ export default function TechStack() {
     ];
 
     return (
-        <div className="flex min-h-screen bg-zinc-50 dark:bg-[#09090b] font-sans">
+        <div className="flex min-h-screen bg-zinc-50 dark:bg-[#09090b] font-sans transition-colors duration-300">
             <Sidebar />
 
-            <main className="flex-1 sm:ml-64 p-6 md:p-12 max-w-6xl">
+            <main className="flex-1 sm:ml-64 p-6 md:p-12 max-w-6xl text-zinc-900 dark:text-zinc-100">
                 <header className="mb-16">
-                    <h1 className="text-4xl font-black tracking-tight text-zinc-900 dark:text-white mb-4 italic">
+                    <h1 className="text-4xl font-black tracking-tight mb-4 italic uppercase">
                         TECHNICAL <span className="text-blue-600">SKILLS</span>
                     </h1>
-                    <p className="text-zinc-500 dark:text-zinc-400 text-lg max-w-2xl">
+                    <p className="text-zinc-500 dark:text-zinc-400 text-lg max-w-2xl font-medium">
                         รวบรวมทักษะทางเทคนิคที่ใช้งานจริงในการพัฒนาซอฟต์แวร์ ทั้งฝั่ง Frontend และ Backend
                     </p>
                 </header>
 
-                <div className="space-y-16">
+                <div className="space-y-20">
                     {techGroups.map((group) => (
                         <section key={group.title}>
                             <div className="mb-8 border-l-4 border-blue-600 pl-4">
-                                <h2 className="text-2xl font-bold dark:text-white uppercase tracking-tight">{group.title}</h2>
-                                <p className="text-zinc-500 text-sm mt-1">{group.description}</p>
+                                <h2 className="text-2xl font-black uppercase tracking-tight italic dark:text-white">
+                                    {group.title}
+                                </h2>
+                                <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-1 font-bold uppercase tracking-widest">
+                                    {group.description}
+                                </p>
                             </div>
 
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
                                 {group.skills.map((skill) => (
-                                    <div
-                                        key={skill.name}
-                                        className="group p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/5 flex flex-col items-center gap-4"
-                                    >
-                                        <div className="w-12 h-12 flex items-center justify-center">
-                                            <img
-                                                src={`https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/${skill.icon}.svg`}
-                                                alt={skill.name}
-                                                className={`w-10 h-10 ${skill.icon === 'nextdotjs' ? 'dark:invert' : ''}`}
-                                            />
+                                    <div key={skill.name} className="group p-4 md:p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl md:rounded-3xl transition-all flex flex-col items-center gap-3 md:gap-4">
+                                        <div className="w-10 h-10 md:w-14 md:h-14 flex items-center justify-center bg-zinc-50 dark:bg-zinc-800/50 rounded-xl md:rounded-2xl">
+                                            <img src={`https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/${skill.icon}.svg`} className={`w-8 h-8 md:w-10 md:h-10 ${skill.icon === 'nextdotjs' ? 'dark:invert' : ''}`} />
                                         </div>
-                                        <span className="text-xs font-black text-zinc-600 dark:text-zinc-400 group-hover:text-blue-600 transition-colors uppercase tracking-wider text-center">
+                                        <span className="text-[9px] md:text-[10px] font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-widest text-center">
                                             {skill.name}
                                         </span>
                                     </div>
@@ -77,6 +76,13 @@ export default function TechStack() {
                             </div>
                         </section>
                     ))}
+                </div>
+
+                {/* --- Footer Decoration --- */}
+                <div className="mt-24 pt-12 border-t border-zinc-200 dark:border-zinc-800 text-center">
+                    <p className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.5em] italic">
+                        Continuously Learning & Improving
+                    </p>
                 </div>
             </main>
         </div>

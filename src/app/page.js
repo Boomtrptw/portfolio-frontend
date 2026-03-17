@@ -21,7 +21,7 @@ export default function Dashboard() {
         {/* --- Stats Grid --- */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           <StatCard label="Experience" value="2+ Years" detail="Full-time & Internship" />
-          <StatCard label="Core Tech" value="JavaScript/TypeScript" detail="Multi-stack Developer" />
+          <StatCard label="Core Tech" value="JS / TS" detail="Modern Web Development" />
           <StatCard label="Education" value="B.Eng" detail="Computer Engineering" />
         </div>
 
@@ -105,10 +105,21 @@ export default function Dashboard() {
 // --- Sub-components ---
 function StatCard({ label, value, detail }) {
   return (
-    <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[2rem] shadow-sm">
-      <p className="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em] mb-2">{label}</p>
-      <h3 className="text-3xl font-black tracking-tight">{value}</h3>
-      <p className="text-sm text-zinc-500 mt-1 font-medium">{detail}</p>
+    // 1. ปรับ rounded จาก [2rem] เป็น xl เพื่อให้ดูเหลี่ยมคมขึ้น
+    <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-sm transition-all hover:border-blue-500/50">
+      <p className="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] mb-3">
+        {label}
+      </p>
+
+      {/* 2. ปรับขนาดฟอนต์จาก text-3xl เป็น text-xl หรือ 2xl เพื่อไม่ให้คำขาด 
+          และใช้ break-words ป้องกันกรณีชื่อเทคโนโลยียาวมากๆ */}
+      <h3 className="text-xl md:text-2xl font-black tracking-tight dark:text-zinc-100 break-words leading-tight">
+        {value}
+      </h3>
+
+      <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 font-medium">
+        {detail}
+      </p>
     </div>
   );
 }
