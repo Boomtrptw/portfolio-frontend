@@ -18,16 +18,16 @@ export default function Dashboard() {
           {/* Header Section - ปรับขนาดให้พอดี ไม่ใหญ่เกินไป */}
           <header className="mb-12">
             <h1 className="text-3xl md:text-5xl font-black tracking-tighter mb-3 uppercase italic">
-              Theerapong <span className="text-blue-600">(Boom)</span>
+              Full Stack <span className="text-blue-600">Developer</span>
             </h1>
             <p className="text-zinc-500 dark:text-zinc-400 text-base md:text-lg font-medium max-w-2xl leading-relaxed">
-              Full Stack Developer | Specialist in Industrial & Backend Solutions
+              Specialist in Industrial Software, Backend Architecture & Smart Solutions
             </p>
           </header>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            <StatCard label="Experience" value="2+ Years" detail="Full-time & Internship" />
+            <StatCard label="Experience" value="2+ Years" detail="Full-time" />
             <StatCard label="Core Tech" value="JS / TS" detail="Modern Web Development" />
             <StatCard label="Education" value="B.Eng" detail="Computer Engineering" />
           </div>

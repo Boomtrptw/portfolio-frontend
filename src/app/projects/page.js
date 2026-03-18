@@ -30,7 +30,7 @@ export default function ProjectsPage() {
       description: "ระบบวางแผนการผลิตอัจฉริยะสำหรับจัดคิวงานให้เครื่องจักร พร้อมระบบออกรายงานวิเคราะห์สถานะแผนงานและติดตามสถานะชิ้นงาน (Part Tracking) แบบครบวงจร",
       tech: ["C#.NET (MVC)", "JavaScript", "jQuery", "SQL Server", "MongoDB"],
       pdfUrl: "/docs/TAG_TEAMPLAS.pdf", // ล็อกไว้ก่อนเพราะเป็นระบบภายใน
-      image: "/docs/planning-preview.png",
+      image: "/images/planning-preview.png",
       details: {
         challenge: "การวางแผนเดิมทำใน Excel ทำให้ยากต่อการกระจายแผนงานไปยังไลน์ผลิต และไม่สามารถติดตามสถานะคิวงานของแต่ละเครื่องจักรได้แบบทันท่วงที",
         solution: "พัฒนาโมดูล Scheduler สำหรับจัดคิวงานรายเครื่องจักร (Machine Scheduling) และระบบ Generate Report อัตโนมัติเพื่อดูภาพรวมแผนงาน",
@@ -50,7 +50,7 @@ export default function ProjectsPage() {
       description: "ระบบบริหารจัดการและแสดงผลข้อมูลการผลิตแบบ Real-time เพื่อควบคุมประสิทธิภาพการทำงานของไลน์ผลิตและวิเคราะห์คอขวดของกระบวนการผลิตในโรงงาน",
       tech: ["C#.NET (MVC)", "JavaScript", "jQuery", "SQL Server", "MongoDB"],
       pdfUrl: "/docs/PCB-Teamplas.pdf",
-      image: "/docs/pcb-preview.png",
+      image: "/images/pcb-preview.png",
       details: {
         challenge: "แก้ปัญหาการจดบันทึกด้วยมือ (Manual Paperwork) ที่ทำให้ข้อมูลล่าช้าและเกิดความคลาดเคลื่อนสูง",
         solution: "พัฒนา Data Acquisition เชื่อมต่อเครื่องจักรโดยตรงเพื่อเก็บสถานะ Running/Idle/Down แบบอัตโนมัติ",
@@ -70,7 +70,7 @@ export default function ProjectsPage() {
       description: "ระบบบริหารจัดการข้อมูลโซ่อุปทานและการสำรวจโครงสร้างผลิตภัณฑ์ (Survey BOM) สำหรับการผลิตเม็ดพลาสติก เพื่อวิเคราะห์ต้นทุนและจัดการวัตถุดิบอย่างเป็นระบบ",
       tech: ["ReactJS", "FastAPI", "SQL Server", "MongoDB"],
       pdfUrl: null, // ไม่มี PDF
-      image: "/docs/scim-preview.png",
+      image: "/images/scim-preview.png",
       details: {
         challenge: "ความซับซ้อนในการคำนวณสัดส่วนผสมเม็ดพลาสติก (Mixing Ratio) และการติดตามราคาจากหลาย Supplier",
         solution: "สร้างแพลตฟอร์มกลางในการทำ Survey BOM และระบบคำนวณต้นทุนการผลิตอัตโนมัติ",
@@ -90,7 +90,7 @@ export default function ProjectsPage() {
       description: "(กำลังพัฒนา) แพลตฟอร์มบริหารจัดการงานสำรวจและซ่อมบำรุงระบบความปลอดภัยอัจฉริยะ เพื่อเชื่อมต่อการทำงานระหว่างการสำรวจหน้างานและทีมช่างซ่อมบำรุง",
       tech: ["NextJS", "n8n", "MySQL"],
       pdfUrl: null,
-      image: "/docs/shinaracha-preview.png",
+      image: "/images/shinaracha-preview.png",
       details: {
         challenge: "ความล่าช้าในการส่งต่อข้อมูลจากหน้างานสู่ทีมช่าง ทำให้การแก้ไขปัญหาด้านความปลอดภัยทำได้ไม่ทันท่วงที",
         solution: "ออกแบบระบบ Mobile-first เพื่อใช้ในการบันทึก Defect และระบบ Auto-assignment ที่จะช่วยกระจายงานให้ช่างได้ทันทีหลังตรวจพบปัญหา",
@@ -113,7 +113,7 @@ export default function ProjectsPage() {
       description: "แอปพลิเคชันบนมือถือสำหรับบริหารจัดการและอำนวยความสะดวกภายในคณะวิศวกรรมศาสตร์ ครอบคลุมระบบฝึกงาน สั่งซื้อสินค้า เช็คชื่อกิจกรรม และการสื่อสาร",
       tech: ["Flutter", "FastAPI", "MongoDB", "Figma", "Draw.io"],
       pdfUrl: "https://www.figma.com/design/OjIS1WgOocBbWp4LuywDC7/Project?node-id=0-1&p=f", // ถ้ามีไฟล์ Slide นำเสนอโปรเจกต์จบ เอามาใส่ตรงนี้ได้ครับ
-      image: "/docs/senior-project-preview.png", // รูป Mockup แอปใน Figma
+      image: "/images/senior-project-preview.png", // รูป Mockup แอปใน Figma
       details: {
         challenge: "การจัดการข้อมูลกิจกรรม ข้อมูลบุคลากร และการสื่อสารภายในคณะกระจัดกระจาย ขาดศูนย์กลาง (Centralized) ในการเข้าถึงข้อมูลและบริการต่างๆ สำหรับนักศึกษา",
         solution: "พัฒนาแอปพลิเคชันมือถือที่รวบรวมระบบ E-commerce, ระบบเช็คชื่อกิจกรรม, Directory คณะ และระบบแชทกลุ่ม ไว้ในแพลตฟอร์มเดียว",

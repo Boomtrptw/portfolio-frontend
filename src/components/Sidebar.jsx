@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Briefcase, Cpu, ChevronLeft, ChevronRight } from "lucide-react";
+import { LayoutDashboard, Briefcase, Cpu, ChevronLeft, ChevronRight, User } from "lucide-react";
 
 export default function Sidebar({ isCollapsed, setIsCollapsed }) {
     const pathname = usePathname();
@@ -10,6 +10,7 @@ export default function Sidebar({ isCollapsed, setIsCollapsed }) {
         { name: "Overview", href: "/", icon: LayoutDashboard },
         { name: "Projects", href: "/projects", icon: Briefcase },
         { name: "Tech Stack", href: "/tech", icon: Cpu },
+        { name: "About", href: "/about", icon: User },
     ];
 
     return (
