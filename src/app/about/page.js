@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import {
@@ -17,32 +17,42 @@ import {
     Calendar,
     Facebook,
     Instagram,
-    MessageCircle
+    MessageCircle,
+    Loader2
 } from "lucide-react";
 
 export default function AboutPage() {
     const [isCollapsed, setIsCollapsed] = useState(false);
 
-    const experiences = [
-        {
-            company: "A&P Maintenance Services Thailand",
-            role: "Full Stack Developer",
-            period: "Aug 2025 - Present",
-            desc: "พัฒนาแพลตฟอร์มสำรวจหน้างาน (Field Service) และระบบบริหารจัดการทีมช่างแบบครบวงจร"
-        },
-        {
-            company: "VR Intelligence",
-            role: "Software Developer",
-            period: "Mar 2024 - Jul 2025",
-            desc: "ออกแบบและพัฒนาระบบ Production Control Board (PCB) และระบบวางแผนการผลิต (Production Plan)"
-        },
-        {
-            company: "Going Jess",
-            role: "Backend Developer (Intern)",
-            period: "Apr 2022 - Jun 2022",
-            desc: "พัฒนาระบบหลังบ้านด้วย FastAPI และจัดการ Query ข้อมูลเพื่อสรุปผลรายงาน"
-        }
-    ];
+    // --- API States ---
+    const [profile, setProfile] = useState(null);
+    const [experiences, setExperiences] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchAboutData = async () => {
+            try {
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+                // ดึงข้อมูลพร้อมกันทั้ง Profile และ Experience
+                const [profileRes, expRes] = await Promise.all([
+                    fetch(`${apiUrl}/about/profile`),
+                    fetch(`${apiUrl}/about/experiences`)
+                ]);
+
+                const profileJson = await profileRes.json();
+                const expJson = await expRes.json();
+
+                if (profileJson.status === "success") setProfile(profileJson.data);
+                if (expJson.status === "success") setExperiences(expJson.data);
+            } catch (error) {
+                console.error("Error fetching about data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAboutData();
+    }, []);
 
     return (
         <div className="flex min-h-screen bg-zinc-50 dark:bg-[#09090b] font-sans transition-colors duration-300">
@@ -58,7 +68,7 @@ export default function AboutPage() {
                         <div className="flex flex-col md:flex-row gap-12 items-center md:items-start">
                             <div className="relative shrink-0">
                                 <div className="w-48 h-48 md:w-64 md:h-64 rounded-xl bg-zinc-200 dark:bg-zinc-900 border-b-8 border-r-8 border-blue-600 overflow-hidden shadow-2xl transition-transform hover:scale-[1.02] flex items-center justify-center">
-                                    <img src="/images/profile.jpg" alt="Theerapong" className="w-full h-full object-cover transition-all" />
+                                    <img src="/images/profile.jpg" alt={profile?.fullName} className="w-full h-full object-cover transition-all" />
                                 </div>
                                 <div className="absolute -bottom-4 -right-4 bg-blue-600 text-white p-3 rounded-xl shadow-lg">
                                     <Zap size={24} fill="currentColor" />
@@ -67,13 +77,13 @@ export default function AboutPage() {
 
                             <div className="flex-1 space-y-6 text-center md:text-left">
                                 <h1 className="text-4xl md:text-7xl font-black tracking-tighter uppercase italic leading-none">
-                                    THEERAPONG TAWAN <span className="text-blue-600">(BOOM)</span>
+                                    {profile?.fullName} <span className="text-blue-600">({profile?.nickname})</span>
                                 </h1>
                                 <h2 className="text-xl md:text-2xl font-bold text-zinc-500 uppercase italic tracking-widest">
-                                    Industrial Full-Stack Developer
+                                    {profile?.role}
                                 </h2>
                                 <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-2xl font-medium">
-                                    นักพัฒนาซอฟต์แวร์ผู้หลงใหลในการแก้ปัญหาหน้างานจริง (On-site Problem Solving) เปลี่ยนความซับซ้อนของงานอุตสาหกรรมให้เป็นระบบ Digital Ecosystem ที่สมบูรณ์แบบ จากการจัดการฐานข้อมูล Supply Chain ขนาดใหญ่ สู่แพลตฟอร์ม Safety Inspection อัจฉริยะ เพื่อสร้างผลลัพธ์ที่จับต้องได้และยั่งยืน
+                                    {profile?.bio}
                                 </p>
 
                                 <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
@@ -82,24 +92,24 @@ export default function AboutPage() {
                                     <Badge icon={<Code2 size={14} />} text="Full-Stack Mastery" />
                                 </div>
 
-                                {/* --- เพิ่ม Personal Info ตรงนี้ตามคำขอ --- */}
+                                {/* --- Personal Info --- */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-zinc-200 dark:border-zinc-800">
-                                    <ContactItem icon={<Calendar size={16} />} label="Birthday" value="17 April 2001" />
-                                    <ContactItem icon={<Phone size={16} />} label="Phone" value="098-443-9885" />
-                                    <ContactItem icon={<Mail size={16} />} label="Email" value="boom_theerapong@hotmail.com" />
-                                    <ContactItem icon={<MapPin size={16} />} label="Location" value="Phaya Thai, Bangkok" />
+                                    <ContactItem icon={<Calendar size={16} />} label="Birthday" value={profile?.birthday} />
+                                    <ContactItem icon={<Phone size={16} />} label="Phone" value={profile?.phone} />
+                                    <ContactItem icon={<Mail size={16} />} label="Email" value={profile?.email} />
+                                    <ContactItem icon={<MapPin size={16} />} label="Location" value={profile?.location} />
                                 </div>
 
                                 <div className="flex justify-center md:justify-start gap-3 pt-2">
-                                    <SocialLink icon={<MessageCircle size={18} />} text="boom.sky" />
-                                    <SocialLink icon={<Facebook size={18} />} text="ธีระพงศ์ ตะวัน" />
-                                    <SocialLink icon={<Instagram size={18} />} text="Boomtrptw" />
+                                    <SocialLink icon={<MessageCircle size={18} />} text={profile?.socials?.line} />
+                                    <SocialLink icon={<Facebook size={18} />} text={profile?.socials?.facebook} />
+                                    <SocialLink icon={<Instagram size={18} />} text={profile?.socials?.instagram} />
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    {/* --- Core Expertise --- */}
+                    {/* --- Core Expertise (Hardcoded as UI Design) --- */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
                         <InfoCard
                             title="Industrial Mindset"
@@ -126,8 +136,8 @@ export default function AboutPage() {
                                 <Zap className="text-blue-600" size={32} /> Experience
                             </h3>
                             <div className="space-y-6 border-l-2 border-zinc-200 dark:border-zinc-800 ml-4">
-                                {experiences.map((exp, i) => (
-                                    <div key={i} className="relative pl-8 group">
+                                {experiences.map((exp) => (
+                                    <div key={exp._id} className="relative pl-8 group">
                                         <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-zinc-200 dark:bg-zinc-800 border-2 border-white dark:border-[#09090b] group-hover:bg-blue-600 transition-colors" />
                                         <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:border-blue-500/50 transition-all border-b-4">
                                             <span className="text-[10px] font-black text-blue-600 uppercase">{exp.period}</span>
@@ -147,10 +157,10 @@ export default function AboutPage() {
                                     <GraduationCap className="text-blue-600" size={32} /> Education
                                 </h3>
                                 <div className="p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl border-b-8 border-b-blue-600 shadow-sm">
-                                    <h4 className="text-xl font-black uppercase italic dark:text-white leading-none">Rattanabundit University</h4>
-                                    <p className="text-blue-600 font-black text-sm uppercase tracking-widest mt-2">Computer Engineering (Dek63)</p>
+                                    <h4 className="text-xl font-black uppercase italic dark:text-white leading-none">{profile?.education?.university}</h4>
+                                    <p className="text-blue-600 font-black text-sm uppercase tracking-widest mt-2">{profile?.education?.major}</p>
                                     <div className="mt-4 text-zinc-500 dark:text-zinc-400 text-sm font-medium italic">
-                                        คณะวิศวกรรมศาสตร์ สาขาวิศวกรรมคอมพิวเตอร์และสารสนเทศ
+                                        {profile?.education?.desc}
                                     </div>
                                 </div>
                             </section>
@@ -164,8 +174,8 @@ export default function AboutPage() {
                                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-150 transition-transform">
                                         <Code2 size={120} />
                                     </div>
-                                    <p className="text-2xl font-black italic leading-tight uppercase relative z-10">
-                                        "ไม่ได้เขียนแค่โค้ด<br />แต่เขียนโซลูชัน<br />ที่ขับเคลื่อนธุรกิจจริง"
+                                    <p className="text-2xl font-black italic leading-tight uppercase relative z-10 whitespace-pre-line">
+                                        "{profile?.philosophy}"
                                     </p>
                                 </div>
                             </section>
@@ -174,7 +184,7 @@ export default function AboutPage() {
 
                     <div className="py-12 border-t border-zinc-200 dark:border-zinc-800 text-center">
                         <p className="text-[10px] md:text-[12px] font-black text-zinc-400 uppercase tracking-[0.5em] italic">
-                            Theerapong Tawan • Systematically Designed
+                            {profile?.fullName} • Systematically Designed
                         </p>
                     </div>
                 </main>
@@ -190,7 +200,7 @@ function ContactItem({ icon, label, value }) {
             <div className="text-blue-600 bg-blue-50 dark:bg-blue-900/20 p-2 rounded-lg">{icon}</div>
             <div>
                 <p className="text-[9px] font-black text-zinc-400 uppercase tracking-widest leading-none mb-1">{label}</p>
-                <p className="text-sm font-bold dark:text-zinc-200">{value}</p>
+                <p className="text-sm font-bold dark:text-zinc-200">{value || "-"}</p>
             </div>
         </div>
     );
@@ -200,7 +210,7 @@ function SocialLink({ icon, text }) {
     return (
         <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-100 dark:bg-zinc-800/50 rounded-lg border border-zinc-200 dark:border-zinc-700 transition-colors hover:border-blue-500">
             <span className="text-zinc-500 dark:text-zinc-400">{icon}</span>
-            <span className="text-[10px] font-bold dark:text-zinc-300">{text}</span>
+            <span className="text-[10px] font-bold dark:text-zinc-300">{text || "-"}</span>
         </div>
     );
 }

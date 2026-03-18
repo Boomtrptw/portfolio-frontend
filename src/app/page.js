@@ -1,11 +1,28 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import { Briefcase, GraduationCap, Wrench, Terminal } from "lucide-react";
 
 export default function Dashboard() {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDashboard = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard`);
+        const result = await res.json();
+        if (result.status === "success") setData(result.data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDashboard();
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-zinc-50 dark:bg-[#09090b] font-sans text-zinc-900 dark:text-zinc-100 transition-all duration-300">
@@ -27,9 +44,9 @@ export default function Dashboard() {
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-            <StatCard label="Experience" value="2+ Years" detail="Full-time" />
-            <StatCard label="Core Tech" value="JS / TS" detail="Modern Web Development" />
-            <StatCard label="Education" value="B.Eng" detail="Computer Engineering" />
+            <StatCard label="Projects" value={loading ? "..." : `${data?.stats.projectCount} Items`} detail="Completed" />
+            <StatCard label="Core Tech" value={loading ? "..." : data?.stats.mainTech} detail="Modern Web Development" />
+            <StatCard label="Experience" value={loading ? "..." : `${data?.stats.expYears} Years`} detail="Professional" />
           </div>
 
           {/* Main Content Grid */}
@@ -38,26 +55,17 @@ export default function Dashboard() {
               <h2 className="text-2xl font-black mb-10 flex items-center gap-3 italic uppercase tracking-tight">
                 <Briefcase className="text-blue-600" size={24} /> Work & Internship
               </h2>
-              <div className="space-y-12 border-l-2 border-zinc-200 dark:border-zinc-800 ml-3 pl-8">
-                <ExperienceItem
-                  title="Full Stack Developer"
-                  company="A&P Maintenance Services Thailand"
-                  date="Aug 2025 - Present (8 months)"
-                  desc="Building field survey systems and automated reporting tools to optimize maintenance workflows."
-                />
-                <ExperienceItem
-                  title="Software Developer"
-                  company="VR Intelligence"
-                  date="Mar 2024 - Jul 2025 (1 year 5 months)"
-                  desc="Developed Production Control Board (PCB) systems for real-time manufacturing data visualization."
-                />
-                <ExperienceItem
-                  title="Backend Developer (Internship)"
-                  company="Going Jess"
-                  date="Apr 2022 - Jun 2022 (3 months)"
-                  desc="Focused on server-side logic and database management using FastAPI and optimized SQL queries."
-                  isIntern
-                />
+              <div className={`space-y-12 border-l-2 border-zinc-200 dark:border-zinc-800 ml-3 pl-8 transition-opacity duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
+                {data?.experiences.map((exp, i) => (
+                  <ExperienceItem
+                    key={i}
+                    title={exp.role}
+                    company={exp.company}
+                    date={exp.period}
+                    desc={exp.desc}
+                    isIntern={exp.role.toLowerCase().includes('intern')}
+                  />
+                ))}
               </div>
             </div>
 
@@ -77,9 +85,12 @@ export default function Dashboard() {
                 <h2 className="text-2xl font-black mb-6 flex items-center gap-3 italic uppercase tracking-tight">
                   <Wrench className="text-blue-600" size={24} /> Technical Skills
                 </h2>
-                <div className="flex flex-wrap gap-2">
-                  {["NextJS", "ReactJS", "NodeJS", "FastAPI", "C#.NET (MVC)", "SQL Server", "MySQL", "MongoDB", "Git", "Postman"].map((s) => (
-                    <span key={s} className="px-3 py-1.5 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 rounded-lg text-[10px] font-black uppercase tracking-tight border border-zinc-200 dark:border-zinc-800 hover:border-blue-500 transition-colors">
+                <div className={`flex flex-wrap gap-2.5 transition-all duration-700 ${loading ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
+                  {data?.skills.map((s) => (
+                    <span
+                      key={s}
+                      className="px-4 py-2 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 rounded-xl text-[10px] font-black uppercase tracking-widest border border-zinc-200 dark:border-zinc-800 shadow-sm hover:border-blue-600 hover:text-blue-600 transition-all duration-300 hover:-translate-y-1 hover:shadow-md cursor-default"
+                    >
                       {s}
                     </span>
                   ))}
