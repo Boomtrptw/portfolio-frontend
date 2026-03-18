@@ -28,7 +28,7 @@ export default function ProjectsPage() {
       company: "Teamplas Chemical",
       status: "Implemented",
       description: "ระบบวางแผนการผลิตอัจฉริยะสำหรับจัดคิวงานให้เครื่องจักร พร้อมระบบออกรายงานวิเคราะห์สถานะแผนงานและติดตามสถานะชิ้นงาน (Part Tracking) แบบครบวงจร",
-      tech: ["C#.NET (MVC)", "SQL Server", "Crystal Reports", "JavaScript"],
+      tech: ["C#.NET (MVC)", "JavaScript", "jQuery", "SQL Server", "MongoDB"],
       pdfUrl: "/docs/TAG_TEAMPLAS.pdf", // ล็อกไว้ก่อนเพราะเป็นระบบภายใน
       image: "/docs/planning-preview.png",
       details: {
@@ -81,6 +81,50 @@ export default function ProjectsPage() {
           "Excel Integration: ระบบ Import/Export ข้อมูลมาตรฐาน Toyota"
         ],
         stats: { acc: "99.9%", latency: "~ 1s" }
+      }
+    },
+    {
+      title: "Field Service & Safety Inspection System",
+      company: "Shinaracha Protector",
+      status: "In Development", // เปลี่ยนจาก Implemented เป็นกำลังพัฒนา
+      description: "(กำลังพัฒนา) แพลตฟอร์มบริหารจัดการงานสำรวจและซ่อมบำรุงระบบความปลอดภัยอัจฉริยะ เพื่อเชื่อมต่อการทำงานระหว่างการสำรวจหน้างานและทีมช่างซ่อมบำรุง",
+      tech: ["NextJS", "n8n", "MySQL"],
+      pdfUrl: null,
+      image: "/docs/shinaracha-preview.png",
+      details: {
+        challenge: "ความล่าช้าในการส่งต่อข้อมูลจากหน้างานสู่ทีมช่าง ทำให้การแก้ไขปัญหาด้านความปลอดภัยทำได้ไม่ทันท่วงที",
+        solution: "ออกแบบระบบ Mobile-first เพื่อใช้ในการบันทึก Defect และระบบ Auto-assignment ที่จะช่วยกระจายงานให้ช่างได้ทันทีหลังตรวจพบปัญหา",
+        // ปรับ Impact เป็น "Expected Impact" หรือเป้าหมายที่เราตั้งไว้
+        impact: "เป้าหมายคือการลดขั้นตอนงานเอกสารลง 80% และทำให้การติดตามสถานะความปลอดภัยในโครงการใหญ่เป็นไปได้แบบ 1:1",
+        specs: [
+          "Digital Inspection: แบบฟอร์มสำรวจอัจฉริยะรองรับระบบ Fire Alarm และ Fire Pump",
+          "Live Task Tracking: (Feature หลัก) ติดตามความคืบหน้าของช่างแบบนาทีต่อนาที",
+          "Defect Lifecycle: ระบบจัดการสถานะของจุดที่ต้องแก้ไขตั้งแต่เริ่มจนถึงส่งมอบงาน",
+          "Automated Reporting: ระบบร่างรายงานอัตโนมัติเพื่อลดภาระงาน Admin"
+        ],
+        // ระบุเป็นเป้าหมายความเสถียร (Target Metrics)
+        stats: { acc: "Target 100%", latency: "Target < 1s" }
+      }
+    },
+    {
+      title: "Engineering Faculty Management App",
+      company: "Senior Project (มหาวิทยาลัย)", // ใช้บอกว่าเป็นโปรเจกต์จบ
+      status: "Academic Project", // เปลี่ยนสถานะให้รู้ว่าเป็นงานเรียน
+      description: "แอปพลิเคชันบนมือถือสำหรับบริหารจัดการและอำนวยความสะดวกภายในคณะวิศวกรรมศาสตร์ ครอบคลุมระบบฝึกงาน สั่งซื้อสินค้า เช็คชื่อกิจกรรม และการสื่อสาร",
+      tech: ["Flutter", "FastAPI", "MongoDB", "Figma", "Draw.io"],
+      pdfUrl: "https://www.figma.com/design/OjIS1WgOocBbWp4LuywDC7/Project?node-id=0-1&p=f", // ถ้ามีไฟล์ Slide นำเสนอโปรเจกต์จบ เอามาใส่ตรงนี้ได้ครับ
+      image: "/docs/senior-project-preview.png", // รูป Mockup แอปใน Figma
+      details: {
+        challenge: "การจัดการข้อมูลกิจกรรม ข้อมูลบุคลากร และการสื่อสารภายในคณะกระจัดกระจาย ขาดศูนย์กลาง (Centralized) ในการเข้าถึงข้อมูลและบริการต่างๆ สำหรับนักศึกษา",
+        solution: "พัฒนาแอปพลิเคชันมือถือที่รวบรวมระบบ E-commerce, ระบบเช็คชื่อกิจกรรม, Directory คณะ และระบบแชทกลุ่ม ไว้ในแพลตฟอร์มเดียว",
+        impact: "ได้ลงมือทำ Full-Stack Development เต็มรูปแบบ (End-to-End) ตั้งแต่ออกแบบ UI/UX, System Architecture ไปจนถึงเขียนโค้ด Mobile App และ Backend ครบวงจร",
+        specs: [
+          "Internship & Directory: ระบบแนะนำสถานที่ฝึกงาน สถานที่ในมหาวิทยาลัย และบุคลากรสำคัญ",
+          "Activity Tracking: ระบบสแกนเช็คชื่อเข้าร่วมกิจกรรม และประเมินผลการผ่านกิจกรรม",
+          "E-Commerce Module: ระบบสั่งซื้อสินค้าและของที่ระลึกภายในคณะ",
+          "Real-time Chat: ระบบแชทกลุ่ม (Group Chat) สำหรับสื่อสารและติดตามข่าวสาร"
+        ],
+        stats: { acc: "-", latency: "-" } // ใส่ Dash ไว้เพราะไม่ได้วัดผลบน Production จริง
       }
     }
   ];

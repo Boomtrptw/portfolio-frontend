@@ -17,6 +17,7 @@ export default function TechStack() {
                 { name: "ReactJS", icon: "react" },
                 { name: "Tailwind CSS", icon: "tailwindcss" },
                 { name: "JavaScript", icon: "javascript" },
+                { name: "Flutter", icon: "flutter" },
             ]
         },
         {
@@ -28,6 +29,7 @@ export default function TechStack() {
                 { name: "C#.NET (MVC)", icon: "dotnet" },
                 { name: "SQL Server", icon: "microsoftsqlserver" },
                 { name: "MySQL", icon: "mysql" },
+                { name: "PostgreSQL", icon: "postgresql" },
                 { name: "MongoDB", icon: "mongodb" },
             ]
         },
@@ -35,8 +37,29 @@ export default function TechStack() {
             title: "Development Tools",
             description: "เครื่องมือที่ใช้ในการพัฒนาและทดสอบระบบ",
             skills: [
+                { name: "VS Code", icon: "visualstudiocode" },
+                { name: "Visual Studio", icon: "visualstudio" },
+                { name: "Android Studio", icon: "androidstudio" }, // ✅ เพิ่ม Android Studio
                 { name: "Git", icon: "git" },
                 { name: "Postman", icon: "postman" },
+            ]
+        },
+        {
+            title: "AI & Automation",
+            description: "การประยุกต์ใช้ AI และระบบอัตโนมัติเพื่อลดขั้นตอนการทำงาน",
+            skills: [
+                { name: "ChatGPT", icon: "openai" },
+                { name: "Google Gemini", icon: "googlegemini" },
+                { name: "Claude", icon: "anthropic" },
+            ]
+        },
+        {
+            title: "Collaboration & Office",
+            description: "เครื่องมือสำหรับจัดการเอกสารและการทำงานร่วมกันในทีม",
+            skills: [
+                { name: "Microsoft Excel", icon: "microsoftexcel" },
+                { name: "Microsoft Word", icon: "microsoftword" },
+                { name: "Microsoft Teams", icon: "microsoftteams" },
             ]
         }
     ];
